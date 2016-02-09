@@ -1,8 +1,12 @@
-shows.forEach(function(cur) { // This data cleaning should be migrated to the python, eventually
 
-	cur.desc = cur.desc[0];
-	cur.time = cur.time[0];
-	cur.title = cur.title[0]
+var month = "February"
+var year = '2016'
+var day = '12'
+var time = "06:00"
 
-})
-console.log(shows)
+var time = moment([Number(year), 0, Number(day), Number(time.split(':')[0]), Number(time.split(':')[1]) ]).month(month)
+// [year, month, day, hour, minute, second, millisecond]
+
+
+// "06:00" "February" "2016" "12"
+// console.log(time)

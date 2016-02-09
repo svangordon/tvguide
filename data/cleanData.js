@@ -1,6 +1,6 @@
 shows.forEach(function(cur) { // This data cleaning should be migrated to the python, eventually
 
-	cur.desc = cur.desc[0];
+	cur.desc = cur.desc[0].trim();
 	cur.time = cur.time[0];
 	cur.title = cur.title[0]
 

@@ -1,0 +1,52 @@
+.viewport {
+  height: 500px;
+  padding: 0;
+  background-color: #95a5a6;
+  overflow: hidden;
+}
+.viewport .emission-row {
+  height: 64px;
+  overflow: hidden;
+  width: 5000px;
+}
+.stations-list {
+  padding: 0;
+}
+.network-block {
+  padding: 0;
+}
+.network-block-logo {
+  height: 50px;
+}
+.network-block-link {
+  height: 100%;
+  width: 100%;
+}
+.time-bar {
+  height: 50px;
+  background-color: #3498db;
+  overflow: hidden;
+}
+.hour-block {
+  height: 100%;
+  display: inline-block;
+  border: 0 solid #000;
+  border-right-width: 1px;
+}
+.move-schedule {
+  font-size: xx-large;
+}
+.move-schedule-container {
+  display: flex;
+  height: 50px;
+  line-height: 50px;
+  align-items: center;
+}
+.emission-block {
+  padding: 0 5px;
+  display: inline-block;
+  height: 64px;
+  font-size: 60%;
+  background-color: #e74c3c;
+  border-right: solid #000 1px;
+}

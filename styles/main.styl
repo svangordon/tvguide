@@ -1,2 +1,51 @@
+t-b-height = 50px
+vRowHeight = 64px
+
 .viewport
+	height 500px
+	padding 0
+	background-color #95a5a6
+	overflow hidden
+	.emission-row
+		height 64px
+		overflow hidden
+		width 5000px //idk why it has to bel ike this -- 'auto' doesn't work, but this div needs to be large enough to show all of the divs inside of it
+
+.stations-list
+	padding 0
+
+.network
+	&-block
+		padding 0
+		&-logo
+			height 50px
+		&-link
+			height 100%
+			width 100%
+
+.time-bar
+	height t-b-height
+	background-color #3498db
+	overflow hidden
+
+.hour-block
+	height 100%
+	display inline-block
+	border 0 solid black
+	border-right-width 1px
 	
+.move-schedule
+	font-size xx-large
+	&-container
+		display flex
+		height t-b-height
+		line-height t-b-height
+		align-items center
+		
+.emission-block
+	padding 0 5px
+	display inline-block
+	height vRowHeight
+	font-size 60%
+	background-color #e74c3c
+	border-right solid black 1px

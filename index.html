@@ -20,44 +20,59 @@
 
 	<!-- Angular -->
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0-rc.0/angular.min.js"></script>
+
+	<!-- moment js -->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
 	
 	<!-- Data files -->
-	<script type="text/javascript" src="testData.json"></script>
-	<script type="text/javascript" src="cleanData.js"></script>
+	<script type="text/javascript" src="data/testData.json"></script>
+	<script type="text/javascript" src="data/cleanData.js"></script>
 
+	<!-- Angular files -->
 	<script src="angular/module.js"></script>
-	<script type="text/javascript" src="angular/emissionsFactory.js"></script>
-	<script type="text/javascript" src="angular/guideViewController.js"></script>
+		<!-- ng filters -->
+		<script type="text/javascript" src="angular/inViewFilter.js"></script>
+
+		<!-- Angular Factories -->
+		<script type="text/javascript" src="angular/emissionsFactory.js"></script>
+		<script type="text/javascript" src="angular/networksFactory.js"></script>
+		<script type="text/javascript" src="angular/timeFactory.js"></script>
+
+		<!-- Angular Controllers -->
+		<script type="text/javascript" src="angular/networksController.js"></script>
+		<script type="text/javascript" src="angular/guideViewController.js"></script>
+	
+	<!-- Assrtd JS -->
+	<script type="text/javascript" src="main.js"></script>
+
 	<link rel="stylesheet" type="text/css" href="styles/main.css">
 </head>
 <body>
 
-	<div class="contianer">
+	<div class="container" ng-controller="guideViewController">
 		<div class="row">
-			<div class="guide-view xs-col-12" ng-controller="guideViewController" ng-class="viewport">
-
-				<!-- <ul class="list-inline">
-					<li ng-repeat="emission in emissions" class="pull-left">
-						<div>	
-							<ul>
-								<li>{{emission.title}}</li>
-								<li>{{emission.time}}</li>
-								<li>{{emission.desc}}</li>
-							</ul>
-						</div>
-					</li>
-				</ul> -->
-
-<!-- 				<div ng-repeat="emission in emissions" class="emission-block">
-					<ul>
-						<li>{{emission.title}}</li>
-						<li>{{emission.time}}</li>
-						<li>{{emission.desc}}</li>
-					</ul>
-				</div>
-
+			<div class="col-xs-1 move-schedule-container">
+				<span class="glyphicon glyphicon-chevron-left move-schedule move-schedule-left" aria-hidden="true" ng-click="schedule.rewind()"></span>
+				<span class="glyphicon glyphicon-chevron-right move-schedule move-schedule-right pull-right" aria-hidden="true" ng-click="schedule.advance()"></span>
 			</div>
-		</div> -->
+			<div class="col-xs-11 time-bar">
+				<div ng-repeat="hour in schedule.contents" class="hour-block" ng-bind="hour.format('LT')" ng-style="{'width' : 60 * minPerPx +'px'}"></div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="stations-list col-xs-1" ng-controller="networksController">
+				<div class="network-block" ng-repeat="network in networks" ng-style="{'background-color' : network.color}">
+					<a class="btn network-block-link">
+						<img class="network-block-logo" ng-src="{{network.logo}}" />
+					</a>
+				</div>
+			</div>
+			<div class="guide-view col-xs-11 viewport">
+				<div class="emission-row">
+					<div ng-repeat="emission in emissions | inViewFilter : schedule" ng-bind="emission.title" class="emission-block pull-left" ng-style="{'width' : emission.length * minPerPx + 'px'}"></div>
+				</div>
+			</div>
+		</div>
 	</div> <!-- /container -->
 
 </body>
