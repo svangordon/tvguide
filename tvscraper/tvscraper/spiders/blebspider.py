@@ -1,4 +1,4 @@
-# run with scrapy crawl blerb -o items.json
+# run with scrapy crawl blerb -o blebData.json
 
 from scrapy.spiders import Spider
 from scrapy.selector import Selector
@@ -6,9 +6,9 @@ from scrapy.selector import Selector
 from tvscraper.items import Emission
 
 
-class BlerbSpider(Spider):
-    name = "blerb"
-    allowed_domains = ["blerb.org"]
+class BlebSpider(Spider):
+    name = "bleb"
+    allowed_domains = ["bleb.org"]
     start_urls = [
         "http://bleb.org/tv/channel.html?ch=bbc1&day=-1",
         "http://bleb.org/tv/channel.html?ch=bbc1&day=0",
@@ -78,6 +78,7 @@ class BlerbSpider(Spider):
             item['month'] = month
             item['year'] = year
             item['network'] = network
+            item['country'] = 'UK'
             items.append(item)
 
         return items
