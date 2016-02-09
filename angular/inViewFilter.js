@@ -7,9 +7,9 @@ angular.module('app')
 			// But if you click to go all the way to friday, it does indeed in fact work (mostly, it breaks a little bit)
 			// So one of the things that I need to do is to get more, better data for everything.
 
-			console.log(schedule.firstHour())
-			// console.log(emissions.filter(function(cur) { return cur.inView(startTime, endTime)}))
-			return emissions.filter(function(cur) { return cur.inView(schedule.firstHour(), schedule.lastHour())})
+			// Well now it doesn't work anymore.
+
+			return emissions.filter(function(cur) { return cur.start.isBefore(schedule.lastHour()) && cur.end.isAfter(schedule.firstHour()) })
 			// return out
 		}
 	})

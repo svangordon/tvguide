@@ -50,7 +50,7 @@ angular.module('app')
 
 
 
-		var schedule = new Schedule(-2,6);
+		var schedule = new Schedule(-2,5);
 		
 
 		return {

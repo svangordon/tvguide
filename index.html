@@ -23,9 +23,11 @@
 
 	<!-- moment js -->
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
+	<script type="text/javascript" src="http://momentjs.com/downloads/moment-timezone.min.js"></script>
 	
 	<!-- Data files -->
-	<script type="text/javascript" src="data/testData.json"></script>
+	<script type="text/javascript" src="tvscraper/results/blebData.json"></script>
+	<script type="text/javascript" src="tvscraper/results/irishTvData.json"></script>
 	<script type="text/javascript" src="data/cleanData.js"></script>
 
 	<!-- Angular files -->
@@ -69,7 +71,7 @@
 			</div>
 			<div class="guide-view col-xs-11 viewport">
 				<div class="emission-row">
-					<div ng-repeat="emission in emissions | inViewFilter : schedule" ng-bind="emission.title" class="emission-block pull-left" ng-style="{'width' : emission.length * minPerPx + 'px'}"></div>
+					<div ng-repeat="emission in emissions | inViewFilter : schedule" ng-bind="emission.title" class="emission-block pull-left" ng-style="{'width' : emission.getDisplayWidth(schedule.firstHour(), schedule.lastHour(), minPerPx) + 'px'}" ng-click="emission.log()"></div>
 				</div>
 			</div>
 		</div>
