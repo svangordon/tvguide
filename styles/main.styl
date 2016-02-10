@@ -24,12 +24,26 @@ vRowHeight = 64px
 			width 100%
 
 .time-bar
-	height t-b-height
+	padding 0
 	background-color #3498db
-	overflow hidden
+	// overflow hidden
+	&-hours-bar
+		overflow hidden
+		height t-b-height
+		padding 0
+	.days-bar
+		overflow hidden
+		height t-b-height
+		padding 0
+
+.day-block
+	background-color white
+	display inline-block
+	width 50px
+	margin 0 10px
 
 .hour-block
-	height 100%
+	height 50px
 	display inline-block
 	border 0 solid black
 	border-right-width 1px
@@ -43,9 +57,22 @@ vRowHeight = 64px
 		align-items center
 		
 .emission-block
+	position relative
 	padding 0 5px
 	display inline-block
 	height vRowHeight
 	font-size 60%
 	background-color #e74c3c
 	border-right solid black 1px
+	&-content
+		color white
+		overflow hidden
+		text-overflow ellipsis
+	&-description
+		position absolute
+		top 0
+		height 64px
+		width 250px
+		z-index 20
+		background-color green
+		color white

@@ -43,6 +43,7 @@
 		<!-- Angular Controllers -->
 		<script type="text/javascript" src="angular/networksController.js"></script>
 		<script type="text/javascript" src="angular/guideViewController.js"></script>
+		<script type="text/javascript" src="angular/timeBarController.js"></script>
 	
 	<!-- Assrtd JS -->
 	<script type="text/javascript" src="main.js"></script>
@@ -57,12 +58,19 @@
 				<span class="glyphicon glyphicon-chevron-left move-schedule move-schedule-left" aria-hidden="true" ng-click="schedule.rewind()"></span>
 				<span class="glyphicon glyphicon-chevron-right move-schedule move-schedule-right pull-right" aria-hidden="true" ng-click="schedule.advance()"></span>
 			</div>
-			<div class="col-xs-11 time-bar">
-				<div ng-repeat="hour in schedule.contents" class="hour-block" ng-bind="hour.format('LT')" ng-style="{'width' : 60 * minPerPx +'px'}"></div>
+			<div class="col-xs-11 time-bar" ng-controller="timeBarController">
+				<div class="days-bar">
+					<div class="day-block" ng-repeat="day in schedule.days" ng-bind="day" ng-click="schedule.goToDay(day)">
+						
+					</div>
+				</div>
+				<div class="hours-bar">
+					<div ng-repeat="hour in schedule.hours" class="hour-block" ng-bind="hour.format('LT')" ng-style="{'width' : 60 * minPerPx +'px'}"></div>
+				</div>
 			</div>
 		</div>
-		<div class="row">
-			<div class="stations-list col-xs-1" ng-controller="networksController">
+		<div class="row" ng-controller="networksController">
+			<div class="stations-list col-xs-1" >
 				<div class="network-block" ng-repeat="network in networks" ng-style="{'background-color' : network.color}">
 					<a class="btn network-block-link">
 						<img class="network-block-logo" ng-src="{{network.logo}}" />
@@ -70,8 +78,14 @@
 				</div>
 			</div>
 			<div class="guide-view col-xs-11 viewport">
-				<div class="emission-row">
-					<div ng-repeat="emission in emissions | inViewFilter : schedule" ng-bind="emission.title" class="emission-block pull-left" ng-style="{'width' : emission.getDisplayWidth(schedule.firstHour(), schedule.lastHour(), minPerPx) + 'px'}" ng-click="emission.log()"></div>
+				<div class="emission-row" ng-repeat="network in networks">
+					<div ng-repeat="emission in network.emissions | inViewFilter : schedule" class="emission-block pull-left" ng-style="{'width' : emission.getDisplayWidth(schedule.firstHour(), schedule.lastHour(), minPerPx) + 'px', 'background-color' : network.color}" ng-click="emission.log()" ng-mouseenter="emission.mouseEnter()" ng-mouseleave="emission.mouseLeave()">
+						<div class="emission-block-content" ng-bind="emission.content"></div>
+						<div ng-show="emission.hover" class="emission-block-description">
+							<p ng-bind="emission.title"></p>
+							<p ng-bind="emission.desc"></p>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

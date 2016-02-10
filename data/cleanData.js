@@ -24,7 +24,8 @@ blebData = blebData.map(function(cur,i,arr) { // This data cleaning should be mi
 	return cur
 });
 
-var bbcOneData = blebData.filter( cur => cur.network === 'BBC 1').sort( (a,b) => a.startTime.diff(b.startTime))
+function assembleNetwork(networkName, arr) {
+	var out = arr.filter( cur => cur.network === networkName).sort( (a,b) => a.startTime.diff(b.startTime))
 	.filter( function (cur , i , arr) {
 		if ( arr[ i + 1] === undefined ) {
 			return true
@@ -33,17 +34,16 @@ var bbcOneData = blebData.filter( cur => cur.network === 'BBC 1').sort( (a,b) =>
 		}
 	});
 
-bbcOneData.forEach(function(cur,i,arr) {
-	cur.endTime = arr[i+1] !== undefined ? 	arr[i+1].startTime :
-											moment.utc([cur.year, 0, cur.day, 6, 0]).month(cur.month);
-	cur.duration = cur.endTime.diff(cur.startTime, 'minute')
+	out.forEach(function(cur,i,arr) {
+		cur.endTime = arr[i+1] !== undefined ? 	arr[i+1].startTime :
+												moment.utc([cur.year, 0, cur.day, 6, 0]).month(cur.month);
+		cur.duration = cur.endTime.diff(cur.startTime, 'minute')
 
-})
+	})
+	return out;
+}
 
-var bbcTwoData = blebData.filter( cur => cur.network === 'BBC 2')
-var channel4data = blebData.filter( cur => cur.network === 'Channel 4')
-var fiveData = blebData.filter( cur => cur.network === 'Five')
-
-
-// console.log(bbcOneData)
-// console.log(blebData[0].startTime.isAfter("12:00", 'hour'))
+var bbcOneData = assembleNetwork('BBC 1', blebData);
+var bbcTwoData = assembleNetwork('BBC 2', blebData)
+var channelFourData = assembleNetwork('Channel 4', blebData)
+var fiveData = assembleNetwork('Five', blebData)
