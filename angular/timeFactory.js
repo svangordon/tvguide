@@ -9,6 +9,8 @@ angular.module('app')
 				this.hoursAfter = hoursAfter;
 				this.hours = setContents(this.startHour, this.hoursBefore, this.hoursAfter);
 				this.days = setDays.call(this)
+				this.firstSlot = firstSlot()
+				this.lastSlot = lastSlot()
 			}
 
 			function setContents(zH, hB, hA) {
@@ -20,23 +22,29 @@ angular.module('app')
 				return out;
 			}
 
-			function setDays() {
-				var curDay = parseInt(this.startHour.format('D'))
-				console.log(typeof this.hours[3].format('D'))
+			function setDays() { // this needs to be done where the days aren't numbers, but date objects -- only way to make this not hackish
+				var curDay = this.startHour
+				var newDay;
 				var out = []
 				for (var i = -2; i < 3 ; i++ ) {
-					out.push(curDay + i)
+					newDay = moment(curDay).add(i,'d')
+					out.push(newDay)
 				}
+				// console.log(out)
 				return out;
 			}
 
 			ScheduleConstructor.prototype.advance = function () { // schedule forward / back move the whole schedule forward / backward, keeping the number of hours in it the same
-				this.startHour.add(1,'hour');
+				if (isValidHour(this.lastHour())) { // doesn't let you advance past the end of the schedule
+					this.startHour.add(1,'hour');
+				}
 				this.setTime();
 			}
 
 			ScheduleConstructor.prototype.rewind = function () {
-				this.startHour.subtract(1,'hour');
+				if (isValidHour(this.firstHour())) {
+					this.startHour.subtract(1,'hour');
+				}
 				this.setTime();
 			}
 
@@ -56,20 +64,44 @@ angular.module('app')
 			}
 
 			ScheduleConstructor.prototype.lastHour = function () {
-				// console.log("last hour : \n", this.hours[this.hours.length-1])
 				return this.hours[this.hours.length-1]
 			}
 
 			ScheduleConstructor.prototype.goToDay = function (day) {
-				this.startHour.date(day)
+				if (isValidDay(day)) {
+					this.startHour = day
+				}
 				this.setTime()
 			}
+
+			function isValidHour(time) {
+				return time.isAfter(firstSlot()) && time.isBefore(lastSlot())
+			}
+
+			function isValidDay(day) {
+				// console.log(lastSlot().isAfter(day))
+				return lastSlot().isAfter(day) && firstSlot().isBefore(day)
+			}
+
+			function setFirstSlot (arr) {
+				return arr.sort(function(a,b){return a.startTime.diff(b.startTime)})[0].startTime
+			}
+
+			function setLastSlot (arr) {
+				return arr.sort(function(a,b){return a.startTime.diff(b.startTime)})[arr.length-1].startTime
+			}
+			
+			var firstSlot = setFirstSlot.bind(this,rawEmissions)
+
+			var lastSlot = setLastSlot.bind(this,rawEmissions)
 
 			return ScheduleConstructor
 
 		})()
 
+		// var chronoSched = arr.sort(function(a,b){return a.startTime.diff(b.startTime)})
 
+		// console.log(chronoSched)
 
 		var schedule = new Schedule(-2,5);
 		

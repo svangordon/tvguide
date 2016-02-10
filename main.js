@@ -10,3 +10,7 @@ var time = moment([Number(year), 0, Number(day), Number(time.split(':')[0]), Num
 
 // "06:00" "February" "2016" "12"
 // console.log(time)
+
+var newTime = time;
+
+time.add(5,'d');

@@ -43,6 +43,7 @@ function assembleNetwork(networkName, arr) {
 	return out;
 }
 
+var rawEmissions = blebData
 var bbcOneData = assembleNetwork('BBC 1', blebData);
 var bbcTwoData = assembleNetwork('BBC 2', blebData)
 var channelFourData = assembleNetwork('Channel 4', blebData)

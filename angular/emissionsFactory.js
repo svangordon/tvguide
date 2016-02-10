@@ -55,12 +55,10 @@ angular.module('app')
 			})
 		}
 
-		var emissions = dataToEmissions(bbcOneData).concat(dataToEmissions(channelFourData))
-
 		// console.log(dataToEmissions(bbcOneData))
 
 		return {
-			emissions : emissions,
+			rawEmissions : rawEmissions,
 			emissionsByNetwork : {
 				bbcOne : dataToEmissions(bbcOneData),
 				bbcTwo : dataToEmissions(bbcTwoData),

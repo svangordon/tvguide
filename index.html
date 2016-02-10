@@ -60,7 +60,7 @@
 			</div>
 			<div class="col-xs-11 time-bar" ng-controller="timeBarController">
 				<div class="days-bar">
-					<div class="day-block" ng-repeat="day in schedule.days" ng-bind="day" ng-click="schedule.goToDay(day)">
+					<div class="day-block" ng-repeat="day in schedule.days" ng-bind="day.format('ddd MMM DD')" ng-click="schedule.goToDay(day)">
 						
 					</div>
 				</div>
