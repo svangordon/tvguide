@@ -57,6 +57,8 @@ angular.module('app')
 			ScheduleConstructor.prototype.setTime = function () {
 				this.hours = setContents(this.startHour, this.hoursBefore, this.hoursAfter);
 				this.days = setDays.call(this)
+				// console.log((moment().isBefore(this.lastHour()) && moment().isAfter(this.firstHour())))
+				// console.log(moment().format(),'\n',this.firstHour().format(), '\n', moment().isAfter(this.firstHour()))
 			}
 
 			ScheduleConstructor.prototype.firstHour = function () {
@@ -64,7 +66,7 @@ angular.module('app')
 			}
 
 			ScheduleConstructor.prototype.lastHour = function () {
-				return this.hours[this.hours.length-1]
+				return moment(this.hours[this.hours.length-1]).add(1,'h')
 			}
 
 			ScheduleConstructor.prototype.goToDay = function (day) {
@@ -74,12 +76,25 @@ angular.module('app')
 				this.setTime()
 			}
 
+			ScheduleConstructor.prototype.nowBarInView = function () {
+				// console.log(moment().isBefore(this.lastHour()) && moment().isAfter(schedule.firstHour())) // This may mean that my function for seeing if emissions are inview is messed up
+				return moment().isBefore(this.lastHour()) && moment().isAfter(schedule.firstHour())
+			}
+
+			ScheduleConstructor.prototype.nowBarPosition = function (minPerPx) {
+				// console.log(this.firstHour().diff(moment(),'m') * minPerPx)
+				return this.firstHour().diff(moment(),'m') * minPerPx * -1 // no matter what i do, it seems like i get the inverse of what i want
+			}
+
+			ScheduleConstructor.prototype.isActiveDay = function (day) {
+				return isValidDay(day);
+			}
+
 			function isValidHour(time) {
 				return time.isAfter(firstSlot()) && time.isBefore(lastSlot())
 			}
 
 			function isValidDay(day) {
-				// console.log(lastSlot().isAfter(day))
 				return lastSlot().isAfter(day) && firstSlot().isBefore(day)
 			}
 
@@ -99,9 +114,6 @@ angular.module('app')
 
 		})()
 
-		// var chronoSched = arr.sort(function(a,b){return a.startTime.diff(b.startTime)})
-
-		// console.log(chronoSched)
 
 		var schedule = new Schedule(-2,5);
 		

@@ -10,4 +10,13 @@ angular.module('app')
 
 		scope.minPerPx = time.minPerPx
 
+		// console.log(emissions.emissionsByNetwork)
+
+		scope.hoverStateReset = function () {
+			for (network in emissions.emissionsByNetwork) {
+				emissions.emissionsByNetwork[network].forEach(function(cur) {
+					cur.hover = false
+				})
+			}
+		}
 	}])

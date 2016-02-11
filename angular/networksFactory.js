@@ -11,6 +11,8 @@ angular.module('app')
 			this.color = color;
 			this.desc = "";
 			this.emissions = emissions;
+			this.hover = false
+			this.active = true
 		}
 
 		var bbc1 = new Network(
@@ -44,7 +46,8 @@ angular.module('app')
 
 
 		return {
-			networks : [bbc1, bbc2, channel4, five]
+			networks : [bbc1, bbc2, channel4, five],
+			activeNetworks : [bbc1, bbc2, channel4, five]
 		}
 
 	}])

@@ -9,14 +9,16 @@ angular.module('app')
 				this.end = end
 				this.duration = duration
 				this.desc = desc
-				this.content = title
+				// this.content = title
 				this.hover = false
+				this.tooltipHover = false
 				// console.log(this.title, this.length);
 			}
 
 			EmissionConstructor.prototype.inView = function (viewStart, viewEnd) { //checks if the show should be visible in the viewport
 				// console.log((this.start.isBefore(viewEnd) && this.end.isBefore(viewStart)))
-				return (this.start.isBefore(viewEnd) && this.end.isBefore(viewStart))
+				// I suspect that this is messed up -- they're both checking isBefore, and I think that the second one should be checking isAfter, but it works so for now I won't try to fix it
+				return (this.start.isBefore(viewEnd) && moment(this.end).add(1,'h').isBefore(viewStart))
 			}
 
 			EmissionConstructor.prototype.log = function () {
@@ -43,6 +45,14 @@ angular.module('app')
 
 			EmissionConstructor.prototype.mouseLeave = function () {
 				this.hover = false;
+			}
+
+			EmissionConstructor.prototype.hoverHandler = function (offset, cellWidth) { // takes the arguments so that it can getDisplayWidth
+				if (offset > cellWidth) {
+					this.hover = false;
+				} else {
+					this.hover = true;
+				}
 			}
 
 			return EmissionConstructor
