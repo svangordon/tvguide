@@ -1,6 +1,6 @@
-blebData = blebData.map(function(cur,i,arr) { // This data cleaning should be migrated to the python, eventually
+// console.log(irishTvData)
 
-	var tZoffset = 7;
+blebData = blebData.map(function(cur,i,arr) { // This data cleaning should be migrated to the python, eventually
 
 	cur.network = cur.network.replace(' on', '');
 	if (!cur.month) {
@@ -42,6 +42,8 @@ function assembleNetwork(networkName, arr) {
 	})
 	return out;
 }
+
+var irishTvData = assembleNetwork('Irish TV', irishTV)
 
 var rawEmissions = blebData
 var bbcOneData = assembleNetwork('BBC 1', blebData);

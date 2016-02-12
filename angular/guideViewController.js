@@ -5,18 +5,73 @@ angular.module('app')
 		scope.schedule = time.schedule
 		scope.emissions  = emissions.emissions;
 		scope.networks = networks.networks;
-		scope.c4 = emissions.channel4
-		// console.log(scope.emissions)
-
 		scope.minPerPx = time.minPerPx
 
-		// console.log(emissions.emissionsByNetwork)
+		scope.timeBarHeight = function () {
+			return scope.networks.filter(cur => cur.active === true).length * 64
+		}
 
-		scope.hoverStateReset = function () {
-			for (network in emissions.emissionsByNetwork) {
-				emissions.emissionsByNetwork[network].forEach(function(cur) {
-					cur.hover = false
-				})
+		scope.textState = {
+			val : 0,
+			increment : function() {
+				this.val = (this.val + 1) % 2
 			}
 		}
+
+		scope.slideState = {
+			val : -1,
+			incrementLeft : function () {
+				if (this.val > 1) {this.val = 0}
+				this.val = (this.val+1) % 2
+				console.log(this.val)
+			},
+			incrementRight : function () {
+				if (this.val < 2) {this.val = 2}
+				this.val = ((this.val+1) % 2) + 2
+				console.log(this.val)
+			}
+		}
+
+		scope.setSlide = function (val) {
+			scope.slideDirection = val;
+			console.log(scope.slideDirection)
+		}
+
+		scope.clearSlide = function () {
+			scope.slideDirection = 'null'
+		}
+
+		scope.evalSlide = function evalSlide (val) {
+			return val === scope.slideDirection
+		}
+
+		scope.log = function(val) {
+			console.log(val)
+		}
+
+		scope.resetHover = function () {
+			scope.activeCell = null;
+			// console.log(emissions.activeCell === obj)
+		}
+
+		// emission.hoverHandler($event.offsetX, emission.getDisplayWidth(schedule.firstHour(), schedule.lastHour(), minPerPx))
+		scope.hoverHandler = function (offset, cellWidth) {
+			// console.log(offset,cellWidth)
+			if (offset > cellWidth) {
+				scope.activeCell = null; 
+			}
+		}
+
+		scope.isActive = function (cell) {
+			// console.log( 'testing : ', cell, '\n', 'isActive() : ', cell === scope.activeCell)
+			return cell === scope.activeCell
+		}
+
+		scope.setActive = function (cell) {
+			scope.activeCell = cell
+			// console.log('active Cell Is : ', scope.activeCell)
+		}
+
+		scope.activeCell = null
+
 	}])

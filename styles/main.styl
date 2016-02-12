@@ -1,6 +1,22 @@
 t-b-height = 50px
 vRowHeight = 64px
 
+body
+	background-color #ecf0f1
+
+.page-header
+	margin-top 0
+	height 100px
+	background-color #1abc9c
+	.title
+		position relative
+		top 5px
+		left 5px
+	.sub-title
+		position relative
+		left 150px
+		top -30px
+
 .viewport
 	padding 0
 	background-color #95a5a6
@@ -13,10 +29,18 @@ vRowHeight = 64px
 .stations-list
 	padding 0
 
+.guide-view
+	width 960px
+	overflow hidden
+
+.inactive-network
+	background-color grey
+
 .network
 	&-block
 		position relative
 		padding 0
+		height 64px
 		&-add
 			display inline-block
 			margin-right 5px
@@ -29,11 +53,14 @@ vRowHeight = 64px
 			width 100%
 .add-network-block
 	display flex
-	background-color red
 	justify-content center
 	align-items center
 	height 64px // Hard coding this bc i'm tired.  I could probably make it more reactive, but whatever
 	width 100%
+.active-network
+	background-color red
+.inactive-network
+	background-color grey
 .remove-network
 	position absolute
 	top 0
@@ -42,7 +69,7 @@ vRowHeight = 64px
 .time-bar
 	padding 0
 	background-color #3498db
-	// overflow hidden
+	width 960px
 	&-hours-bar
 		overflow hidden
 		height t-b-height
@@ -79,8 +106,9 @@ vRowHeight = 64px
 	font-size xx-large
 	&-container
 		display flex
-		height t-b-height
-		line-height t-b-height
+		height 100px
+		background-color white
+		line-height 100px
 		align-items center
 		
 .emission-block
@@ -119,3 +147,20 @@ vRowHeight = 64px
 	display inline-block
 	position absolute
 	z-index 10
+	
+// .tv-guide-container
+// 	position relative
+// 	left 60px
+
+.site-desc
+	margin-top 50px
+	background-color white
+	&-header
+		text-align center
+		margin-bottom 20px
+
+hr
+	text-align center
+	margin-top 0
+	border 1px solid black
+	width 80%

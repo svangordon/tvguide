@@ -1,3 +1,21 @@
+body {
+  background-color: #ecf0f1;
+}
+.page-header {
+  margin-top: 0;
+  height: 100px;
+  background-color: #1abc9c;
+}
+.page-header .title {
+  position: relative;
+  top: 5px;
+  left: 5px;
+}
+.page-header .sub-title {
+  position: relative;
+  left: 150px;
+  top: -30px;
+}
 .viewport {
   padding: 0;
   background-color: #95a5a6;
@@ -10,9 +28,17 @@
 .stations-list {
   padding: 0;
 }
+.guide-view {
+  width: 960px;
+  overflow: hidden;
+}
+.inactive-network {
+  background-color: #808080;
+}
 .network-block {
   position: relative;
   padding: 0;
+  height: 64px;
 }
 .network-block-add {
   display: inline-block;
@@ -29,11 +55,16 @@
 }
 .add-network-block {
   display: flex;
-  background-color: #f00;
   justify-content: center;
   align-items: center;
   height: 64px;
   width: 100%;
+}
+.active-network {
+  background-color: #f00;
+}
+.inactive-network {
+  background-color: #808080;
 }
 .remove-network {
   position: absolute;
@@ -43,6 +74,7 @@
 .time-bar {
   padding: 0;
   background-color: #3498db;
+  width: 960px;
 }
 .time-bar-hours-bar {
   overflow: hidden;
@@ -83,8 +115,9 @@
 }
 .move-schedule-container {
   display: flex;
-  height: 50px;
-  line-height: 50px;
+  height: 100px;
+  background-color: #fff;
+  line-height: 100px;
   align-items: center;
 }
 .emission-block {
@@ -127,4 +160,18 @@
   display: inline-block;
   position: absolute;
   z-index: 10;
+}
+.site-desc {
+  margin-top: 50px;
+  background-color: #fff;
+}
+.site-desc-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+hr {
+  text-align: center;
+  margin-top: 0;
+  border: 1px solid #000;
+  width: 80%;
 }

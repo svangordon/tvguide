@@ -1,5 +1,5 @@
 angular.module('app')
-	.factory('emissionsFactory', [function(){
+	.factory('emissionsFactory', ['timeFactory', function(timeFactory){
 
 		var Emission = ( function () {
 			function EmissionConstructor (title, network, start, end, duration, desc) {
@@ -18,24 +18,28 @@ angular.module('app')
 			EmissionConstructor.prototype.inView = function (viewStart, viewEnd) { //checks if the show should be visible in the viewport
 				// console.log((this.start.isBefore(viewEnd) && this.end.isBefore(viewStart)))
 				// I suspect that this is messed up -- they're both checking isBefore, and I think that the second one should be checking isAfter, but it works so for now I won't try to fix it
-				return (this.start.isBefore(viewEnd) && moment(this.end).add(1,'h').isBefore(viewStart))
+				var firstHour = timeFactory.schedule.firstHour();
+				var lastHour = timeFactory.schedule.lastHour();
+				return (this.start.isBefore(lastHour) && moment(this.end).add(1,'h').isBefore(firstHour))
 			}
 
 			EmissionConstructor.prototype.log = function () {
 				console.log(this.title, "\n",this.start.format(), "\n",this.end.format(), "\n",this.duration)
 			}
 
-			EmissionConstructor.prototype.getDisplayWidth = function(viewStart,viewEnd,pxPerMin) {
+			EmissionConstructor.prototype.getDisplayWidth = function() {
 				var minInView;
-				
-					if (viewStart.isAfter(this.start)) {
-						minInView = viewStart.diff(this.end, 'm')
-					} else if (viewEnd.isBefore(this.end)) {
-						minInView = this.start.diff(viewEnd, 'm')
+				var firstHour = timeFactory.schedule.firstHour();
+				var lastHour = timeFactory.schedule.lastHour();
+				var minPerPx = timeFactory.minPerPx
+					if (firstHour.isAfter(this.start)) { // This could be a ternary operator, but it's easier to read like this
+						minInView = firstHour.diff(this.end, 'm')
+					} else if (lastHour.isBefore(this.end)) {
+						minInView = this.start.diff(lastHour, 'm')
 					} else {
 						minInView = this.start.diff(this.end, 'm')
 					}
-					return minInView * pxPerMin * -1
+					return minInView * minPerPx * -1
 				
 			}
 
@@ -44,14 +48,15 @@ angular.module('app')
 			}
 
 			EmissionConstructor.prototype.mouseLeave = function () {
+				// console.log('emisisons')
 				this.hover = false;
 			}
 
 			EmissionConstructor.prototype.hoverHandler = function (offset, cellWidth) { // takes the arguments so that it can getDisplayWidth
 				if (offset > cellWidth) {
-					this.hover = false;
+					return null
 				} else {
-					this.hover = true;
+					return this
 				}
 			}
 
@@ -73,7 +78,9 @@ angular.module('app')
 				bbcOne : dataToEmissions(bbcOneData),
 				bbcTwo : dataToEmissions(bbcTwoData),
 				channelFour : dataToEmissions(channelFourData),
-				five : dataToEmissions(fiveData)
-			}
+				five : dataToEmissions(fiveData),
+				irishTv : dataToEmissions(irishTvData)
+			},
+			activeCell : null
 		}
 	}])

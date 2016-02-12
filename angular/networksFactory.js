@@ -14,7 +14,17 @@ angular.module('app')
 			this.hover = false
 			this.active = true
 		}
-
+		var irishTv = new Network(
+			'Irish TV',
+			'English / Gaelic',
+			'Ireland',
+			'http://www.irishtv.ie/schedule',
+			'http://www.irishtv.ie/broadcast',
+			'http://resources.vzaar.com/vzaar/vz1/111/target/vz1111b142c3cc41b4898a3ba503700e55.jpg',
+			'#5E710B',
+			emissionsFactory.emissionsByNetwork.irishTv
+			)
+		irishTv.active = false
 		var bbc1 = new Network(
 			"BBC 1",
 			"English",
@@ -46,7 +56,7 @@ angular.module('app')
 
 
 		return {
-			networks : [bbc1, bbc2, channel4, five],
+			networks : [bbc1, bbc2, channel4, five, irishTv],
 			activeNetworks : [bbc1, bbc2, channel4, five]
 		}
 
