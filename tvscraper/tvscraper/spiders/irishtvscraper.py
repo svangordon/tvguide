@@ -10,7 +10,14 @@ class IrishSpider(Spider):
     name = "irishtv"
     allowed_domains = ["irishtv.ie"]
     start_urls = [
-        "http://information.tv/IrishTV/schedule.php"
+        "http://information.tv/IrishTV/schedule.php?day=-3",
+        'http://information.tv/IrishTV/schedule.php?day=-2',
+        'http://information.tv/IrishTV/schedule.php?day=-1',
+        'http://information.tv/IrishTV/schedule.php?day=0',
+        'http://information.tv/IrishTV/schedule.php?day=1',
+        'http://information.tv/IrishTV/schedule.php?day=2',
+        'http://information.tv/IrishTV/schedule.php?day=3',
+        'http://information.tv/IrishTV/schedule.php?day=4'
     ]
 
     def parse(self, response):
