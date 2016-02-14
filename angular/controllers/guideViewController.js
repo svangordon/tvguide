@@ -1,11 +1,18 @@
 angular.module('app')
-	.controller('guideViewController', ['$scope', 'emissionsFactory', 'networksFactory', 'timeFactory', function(scope, emissions, networks, time) {
+	.controller('guideViewController', ['$scope', 'emissionsFactory', 'networksFactory', 'timeFactory', 'hoverFactory', function(scope, emissions, networks, time, hover) {
 
 		scope.hours = time.hours;
 		scope.schedule = time.schedule
 		scope.emissions  = emissions.emissions;
 		scope.networks = networks.networks;
 		scope.minPerPx = time.minPerPx
+		scope.hover = hover.activeCell
+
+		scope.log = function (val) {
+			// var activeCell = document.getElementsByClassName('active-cell')[0]
+			// console.log( activeCell.offsetTop, activeCell.offsetLeft )
+			console.log(hover)
+		}
 
 		scope.timeBarHeight = function () {
 			return scope.networks.filter(cur => cur.active === true).length * 64
@@ -43,10 +50,6 @@ angular.module('app')
 
 		scope.evalSlide = function evalSlide (val) {
 			return val === scope.slideDirection
-		}
-
-		scope.log = function(val) {
-			console.log(val)
 		}
 
 		scope.resetHover = function () {

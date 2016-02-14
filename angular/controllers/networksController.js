@@ -2,9 +2,9 @@ angular.module('app')
 	.controller('networksController', [ '$scope', 'networksFactory', 'emissionsFactory', function (scope, networks,emissions) {
 		scope.networks = networks.networks
 		scope.activeNetworks = networks.activeNetworks
-		scope.log = function(val) {
-			console.log(val)
-		}
+		// scope.log = function(val) {
+		// 	console.log(val)
+		// }
 
 		scope.record = function (val) {
 			console.log(val)

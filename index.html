@@ -35,22 +35,25 @@
 	<script type="text/javascript" src="data/cleanData.js"></script>
 
 	<!-- Angular files -->
-	<script src="angular/module.js"></script>
+	<script src="angular/modules/module.js"></script>
+		<!-- Angular Animations -->
+		<script type="text/javascript" src="angular/modules/ngAnimations.js"></script>
+		
 		<!-- ng filters -->
-		<script type="text/javascript" src="angular/inViewFilter.js"></script>
+		<script type="text/javascript" src="angular/filters/inViewFilter.js"></script>
 
 		<!-- Angular Factories -->
-		<script type="text/javascript" src="angular/emissionsFactory.js"></script>
-		<script type="text/javascript" src="angular/networksFactory.js"></script>
-		<script type="text/javascript" src="angular/timeFactory.js"></script>
+		<script type="text/javascript" src="angular/factories/emissionsFactory.js"></script>
+		<script type="text/javascript" src="angular/factories/hoverFactory.js"></script>
+		<script type="text/javascript" src="angular/factories/networksFactory.js"></script>
+		<script type="text/javascript" src="angular/factories/timeFactory.js"></script>
 
 		<!-- Angular Controllers -->
-		<script type="text/javascript" src="angular/networksController.js"></script>
-		<script type="text/javascript" src="angular/guideViewController.js"></script>
-		<script type="text/javascript" src="angular/timeBarController.js"></script>
+		<script type="text/javascript" src="angular/controllers/networksController.js"></script>
+		<script type="text/javascript" src="angular/controllers/tooltipController.js"></script>
+		<script type="text/javascript" src="angular/controllers/guideViewController.js"></script>
+		<script type="text/javascript" src="angular/controllers/timeBarController.js"></script>
 	
-		<!-- Angular Animations -->
-		<script type="text/javascript" src="angular/ngAnimations.js"></script>
 	<!-- Assrtd JS -->
 	<script type="text/javascript" src="main.js"></script>
 
@@ -68,6 +71,7 @@
 		</div>
 
 	<div class="container tv-guide-container" ng-controller="guideViewController">
+		<div ng-controller="tooltipController"  style="width : 100px; height : 100px; background-color : red; position : absolute; z-index:  50; left : 1000px; top : 0px" ng-click="log()" ng-bind="hover.activeCell.title"></div>
 		<div class="row">
 			<div class="col-xs-1 move-schedule-container">
 				<span class="glyphicon glyphicon-chevron-left move-schedule move-schedule-left" aria-hidden="true" ng-click="slideState.incrementLeft(); schedule.rewind()"></span>
@@ -102,9 +106,9 @@
 			</div>
 			<div class="guide-view col-xs-10 viewport" ng-style="{'height' : (activeNetworksNumber() + 1) * 64 + 'px'}">
 				<div class="emission-row" ng-repeat="network in networks | filter : {active : true}" ng-style="{'background-color' : network.color}">
-					<div ng-repeat="emission in network.emissions | inViewFilter : schedule" class="emission-block pull-left" ng-class="{'slide-left-1' : slideState.val === 0, 'slide-left-2' : slideState.val === 1, 'slide-right-1' : slideState.val === 2, 'slide-right-2' : slideState.val === 3}" ng-style="{'width' : emission.getDisplayWidth() + 'px', 'background-color' : network.color, 'transform' : 'translateX('+emisson.getDisplayWidth()+'px'}" ng-click="resetHover(emission)">
-						<div class="emission-block-content" ng-bind="::emission.title" ng-mouseenter="setActive(emission)"></div>
-						<div ng-show="isActive(emission)" class="emission-block-description" ng-mousemove="hoverHandler($event.offsetX, emission.getDisplayWidth())" ng-mouseleave="resetHover()" ng-click="resetHover()">
+					<div ng-repeat="emission in network.emissions | inViewFilter : schedule" class="emission-block pull-left" ng-class="{'active-cell': hover.testActive(emission) , 'slide-left-1' : slideState.val === 0, 'slide-left-2' : slideState.val === 1, 'slide-right-1' : slideState.val === 2, 'slide-right-2' : slideState.val === 3}" ng-style="{'width' : emission.getDisplayWidth() + 'px', 'background-color' : network.color, 'transform' : 'translateX('+emisson.getDisplayWidth()+'px'}" ng-click="log(document.getElementsByClassName('active-cell'))">
+						<div class="emission-block-content" ng-bind="::emission.title" ng-mouseenter="hover.setActive(emission)"></div>
+						<div ng-show="hover.testActive(emission)" class="emission-block-description" ng-mousemove="hover.activeCell = hover.activeCell.hoverHandler($event.offsetX, emission.getDisplayWidth())" ng-mouseleave="hover.resetActive()" ng-click="hover.resetActive()">
 							<p ng-bind="::emission.title"></p>
 							<p ng-bind="::emission.desc"></p>
 						</div>
