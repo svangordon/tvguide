@@ -20,13 +20,17 @@ body
 .tv-guide-container
 	position relative
 
-.tooltip
-	width : 1000px
-	height : 1000px
-	background-color black
+.tooltip-div // For reasons beyond my comprehension, this breaks if the class name is 'tooltip' instead of 'tooltip-div'.  Something to do with ng, i think, but i'm not sure 
+	width : 100px
+	height : 64px
+	font-size 60%
 	position : absolute
-	left : 0
-	top : 0px
+	z-index: 50
+	left : 1000px
+	min-width 250px
+	z-index 20
+	background-color green
+	color white
 
 .viewport
 	padding 0
@@ -131,7 +135,7 @@ body
 	background-color #e74c3c
 	border-right solid black 1px
 	&-content
-		margin-left 5px
+		padding-left 5px
 		color white
 		overflow hidden
 		text-overflow ellipsis

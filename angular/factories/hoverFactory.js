@@ -9,9 +9,11 @@ angular.module('app')
 				return this.activeCell
 			}
 			ActiveCellConstructor.prototype.setActive = function (activeCell) {
+				// console.log('set' , activeCell)
 				this.activeCell = activeCell;
 			}
 			ActiveCellConstructor.prototype.resetActive = function () {
+				// console.log('reset')
 				this.activeCell = null;
 			}
 			ActiveCellConstructor.prototype.testActive = function (cell) {
@@ -19,10 +21,10 @@ angular.module('app')
 				return cell === this.activeCell
 			}
 			ActiveCellConstructor.prototype.getTitle = function () {
-				return this.activeCell === null ? null : this.activeCell.title;
+				return this.activeCell === null || this.activeCell === undefined ? null : this.activeCell.title;
 			}
 			ActiveCellConstructor.prototype.getDesc = function () {
-				return this.activeCell === null ? null : this.activeCell.desc;
+				return this.activeCell === null || this.activeCell === undefined ? null : this.activeCell.desc;
 			}
 
 

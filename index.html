@@ -71,7 +71,10 @@
 		</div>
 
 	<div class="container tv-guide-container" ng-controller="guideViewController">
-		<div ng-controller="tooltipController"  style="width : 100px; height : 100px; background-color : red; position : absolute; z-index:  50; left : 1000px; top : 0px" ng-click="log()" ng-bind="hover.activeCell.title"></div>
+		<div ng-controller="tooltipController" ng-show="isActiveCell()" ng-mouseleave="hover.resetActive(); logActiveOnExit()" ng-mousemove="hoverHandler($event.offsetX)" class="tooltip-div" ng-style="{'top' : getTop() + 'px' , 'left' : getLeft() + 'px', 'width' : hover.activeCell.getDisplayWidth()}">
+			<p ng-bind="hover.getTitle()"></p>
+			<p ng-bind="hover.activeCell.desc"></p>
+		</div>
 		<div class="row">
 			<div class="col-xs-1 move-schedule-container">
 				<span class="glyphicon glyphicon-chevron-left move-schedule move-schedule-left" aria-hidden="true" ng-click="slideState.incrementLeft(); schedule.rewind()"></span>
@@ -106,12 +109,12 @@
 			</div>
 			<div class="guide-view col-xs-10 viewport" ng-style="{'height' : (activeNetworksNumber() + 1) * 64 + 'px'}">
 				<div class="emission-row" ng-repeat="network in networks | filter : {active : true}" ng-style="{'background-color' : network.color}">
-					<div ng-repeat="emission in network.emissions | inViewFilter : schedule" class="emission-block pull-left" ng-class="{'active-cell': hover.testActive(emission) , 'slide-left-1' : slideState.val === 0, 'slide-left-2' : slideState.val === 1, 'slide-right-1' : slideState.val === 2, 'slide-right-2' : slideState.val === 3}" ng-style="{'width' : emission.getDisplayWidth() + 'px', 'background-color' : network.color, 'transform' : 'translateX('+emisson.getDisplayWidth()+'px'}" ng-click="log(document.getElementsByClassName('active-cell'))">
-						<div class="emission-block-content" ng-bind="::emission.title" ng-mouseenter="hover.setActive(emission)"></div>
-						<div ng-show="hover.testActive(emission)" class="emission-block-description" ng-mousemove="hover.activeCell = hover.activeCell.hoverHandler($event.offsetX, emission.getDisplayWidth())" ng-mouseleave="hover.resetActive()" ng-click="hover.resetActive()">
+					<div ng-repeat="emission in network.emissions | inViewFilter : schedule" class="emission-block pull-left" ng-class="{'active-cell': hover.testActive(emission) , 'slide-left-1' : slideState.val === 0, 'slide-left-2' : slideState.val === 1, 'slide-right-1' : slideState.val === 2, 'slide-right-2' : slideState.val === 3}" ng-style="{'width' : emission.getDisplayWidth() + 'px', 'background-color' : network.color, 'transform' : 'translateX('+emisson.getDisplayWidth()+'px'}" ng-click="log(document.getElementsByClassName('active-cell'))" ng-mouseenter="hover.setActive(emission); log('hi')" ng-mousemove="log()" ng-bind="emission.title">
+						<!-- <div class="emission-block-content" ng-bind="::emission.title"></div> -->
+<!-- 						<div ng-show="false" class="emission-block-description" ng-mousemove="hover.activeCell = hover.activeCell.hoverHandler($event.offsetX, emission.getDisplayWidth())" ng-mouseleave="hover.resetActive()" ng-click="hover.resetActive()">
 							<p ng-bind="::emission.title"></p>
 							<p ng-bind="::emission.desc"></p>
-						</div>
+						</div> -->
 					</div>
 				</div>
 				<div ng-show="addNetworks">

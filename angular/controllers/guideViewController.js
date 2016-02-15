@@ -9,9 +9,7 @@ angular.module('app')
 		scope.hover = hover.activeCell
 
 		scope.log = function (val) {
-			// var activeCell = document.getElementsByClassName('active-cell')[0]
-			// console.log( activeCell.offsetTop, activeCell.offsetLeft )
-			console.log(hover)
+			console.log(val)
 		}
 
 		scope.timeBarHeight = function () {
@@ -52,29 +50,16 @@ angular.module('app')
 			return val === scope.slideDirection
 		}
 
-		scope.resetHover = function () {
-			scope.activeCell = null;
-			// console.log(emissions.activeCell === obj)
-		}
 
-		// emission.hoverHandler($event.offsetX, emission.getDisplayWidth(schedule.firstHour(), schedule.lastHour(), minPerPx))
-		scope.hoverHandler = function (offset, cellWidth) {
-			// console.log(offset,cellWidth)
-			if (offset > cellWidth) {
-				scope.activeCell = null; 
-			}
-		}
+		// Holding on to this code until later.  May be useful?
+		// // // // // // // // // // // 
+		// // emission.hoverHandler($event.offsetX, emission.getDisplayWidth(schedule.firstHour(), schedule.lastHour(), minPerPx))
+		// scope.hoverHandler = function (offset, cellWidth) {
+		// 	// console.log(offset,cellWidth)
+		// 	if (offset > cellWidth) {
+		// 		scope.activeCell = null; 
+		// 	}
+		// }
 
-		scope.isActive = function (cell) {
-			// console.log( 'testing : ', cell, '\n', 'isActive() : ', cell === scope.activeCell)
-			return cell === scope.activeCell
-		}
-
-		scope.setActive = function (cell) {
-			scope.activeCell = cell
-			// console.log('active Cell Is : ', scope.activeCell)
-		}
-
-		scope.activeCell = null
 
 	}])
